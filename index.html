@@ -3,12 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M.U.R & B.M</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    <title>M.U.R & B.M | Anniversary</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <style>
         body, html {
             margin: 0; padding: 0; height: 100%; width: 100%;
             overflow: hidden; font-family: 'Poppins', sans-serif; background: #000;
+        }
+
+        #overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; z-index: 100; display: flex;
+            justify-content: center; align-items: center; cursor: pointer;
+        }
+
+        .start-btn {
+            padding: 15px 35px; font-size: 1.2rem; color: #fff;
+            background: linear-gradient(45deg, #ff4b2b, #ff9a9e);
+            border: none; border-radius: 50px; cursor: pointer;
+            box-shadow: 0 0 25px rgba(255, 75, 43, 0.6);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
 
         .video-container {
@@ -29,26 +49,25 @@
         }
 
         .glass-box {
-            background: rgba(0, 0, 0, 0.6); padding: 30px; border-radius: 20px;
-            backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.1);
-            max-width: 80%;
-        }
-
-        h1 {
-            font-size: 2rem; margin: 0;
-            background: linear-gradient(to right, #ff9a9e, #fad0c4);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-
-        .timer { font-size: 4rem; font-weight: bold; color: #ff4b2b; }
-
-        .message-text {
-            font-size: 1.3rem; line-height: 1.6; color: #fff;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+            background: rgba(0, 0, 0, 0.55); padding: 35px; border-radius: 25px;
+            backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 85%; display: none;
             animation: fadeIn 2s ease-in;
         }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .anniversary-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem; color: #ff9a9e; margin-bottom: 10px;
+        }
+
+        h1 { font-size: 1.8rem; margin: 0; color: #fff; }
+
+        .message-text {
+            font-size: 1.2rem; line-height: 1.7; color: #fff;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
         .heart {
             position: absolute; bottom: -100px; font-size: 25px;
@@ -63,57 +82,59 @@
 </head>
 <body>
 
-    <div class="video-container">
-        <iframe id="mainVideo" src="https://www.youtube.com/embed/u2IEDVXPcc8?autoplay=1&mute=1&controls=0&loop=1&playlist=u2IEDVXPcc8"></iframe>
+    <!-- Start Overlay -->
+    <div id="overlay" onclick="startSurprise()">
+        <button class="start-btn">Click to See Surprise ❤️</button>
     </div>
 
-    <div id="ui" class="content-overlay">
-        <!-- Step 1 & 2: Names & Countdown -->
+    <div class="video-container">
+        <iframe id="mainVideo" src=""></iframe>
+    </div>
+
+    <div class="content-overlay">
+        <!-- Step 1: Names & Happy Anniversary -->
         <div id="step1" class="glass-box">
+            <div class="anniversary-title">Happy Anniversary!</div>
             <h1>M.U.R. DEEGHAYU ❤️ B.M. DULAKSHI</h1>
-            <div id="countdown" class="timer">20</div>
-            <p>Seconds for a surprise...</p>
         </div>
 
-        <!-- Step 3: Final Message -->
-        <div id="step2" class="glass-box" style="display: none;">
+        <!-- Step 2: Love Message -->
+        <div id="step2" class="glass-box">
             <p class="message-text">
-                අකීකරැ හිත කැලි කෑලි වලට කැඩිලා ගිහිල්ල තිබ්බත්💔, ආදරේ කියන ගම් එකෙන් ඔයා ඒක ඇලෙව්වා ❤💕. <br>
+                අකීකරැ හිත කැලි කෑලි වලට කැඩිලා ගිහිල්ල තිබ්බත්💔, <br>
+                ආදරේ කියන ගම් එකෙන් ඔයා ඒක ඇලෙව්වා ❤💕. <br>
                 කිසිම පනක් තිබ්බෙ නැති මගේ හිතට ඔයා පන දුන්නා 💟💝... <br><br>
-                <b>ඉතින් මම හැමදාටමත් ඔයාට ආදරෙයි ❤. I Love You Menikh ..</b>
+                <b>ඉතින් මම හැමදාටමත් ඔයාට ආදරෙයි ❤. <br>I Love You Menikh ..</b>
             </p>
         </div>
     </div>
 
     <script>
-        let timeLeft = 20;
-        const timerDisplay = document.getElementById('countdown');
+        const mainVideo = document.getElementById('mainVideo');
+        const overlay = document.getElementById('overlay');
         const step1 = document.getElementById('step1');
         const step2 = document.getElementById('step2');
-        const mainVideo = document.getElementById('mainVideo');
 
-        const interval = setInterval(() => {
-            timeLeft--;
-            timerDisplay.innerText = timeLeft;
-
-            if (timeLeft <= 0) {
-                clearInterval(interval);
-                startFinalStep();
-            }
-        }, 1000);
-
-        function startFinalStep() {
-            step1.style.display = 'none';
-            // දෙවැනි වීඩියෝ එක (Shorts) Load කරනවා
-            mainVideo.src = "https://www.youtube.com/embed/gJ28BCZTVFQ?autoplay=1&mute=1&controls=0&loop=1&playlist=gJ28BCZTVFQ";
+        function startSurprise() {
+            overlay.style.display = 'none';
             
-            // තත්පර 2කින් Message එක පේන්න සලස්වනවා
+            // 1. මුලින්ම පළමු වීඩියෝ එක ප්ලේ කරනවා
+            mainVideo.src = "https://www.youtube.com/embed/u2IEDVXPcc8?autoplay=1&controls=0&mute=0&playlist=u2IEDVXPcc8&loop=1";
+
+            // 2. තත්පර 12කට පසු නම් සහ Anniversary කියන එක පෙන්වනවා
             setTimeout(() => {
+                step1.style.display = 'block';
+            }, 12000);
+
+            // 3. තවත් තත්පර 12කට පසු (මුල සිට තත්පර 24කින්) ඊළඟ වීඩියෝ එක සහ මැසේජ් එක පෙන්වනවා
+            setTimeout(() => {
+                step1.style.display = 'none';
+                mainVideo.src = "https://www.youtube.com/embed/gJ28BCZTVFQ?autoplay=1&controls=0&mute=0&playlist=gJ28BCZTVFQ&loop=1";
                 step2.style.display = 'block';
-            }, 2000);
+            }, 24000);
         }
 
-        // Floating Hearts Animation
+        // Floating Hearts
         function createHeart() {
             const heart = document.createElement('div');
             heart.classList.add('heart');
