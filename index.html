@@ -8,21 +8,20 @@
     <style>
         body, html { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; font-family: 'Poppins', sans-serif; background: #000; }
         
-        #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 100; display: flex; justify-content: center; align-items: center; cursor: pointer; }
-        .start-btn { padding: 15px 35px; font-size: 1.2rem; color: #fff; background: linear-gradient(45deg, #ff4b2b, #ff9a9e); border: none; border-radius: 50px; cursor: pointer; box-shadow: 0 0 25px rgba(255, 75, 43, 0.6); }
+        #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 100; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; color: white; }
+        .start-btn { padding: 15px 35px; font-size: 1.2rem; color: #fff; background: linear-gradient(45deg, #ff4b2b, #ff9a9e); border: none; border-radius: 50px; cursor: pointer; box-shadow: 0 0 25px rgba(255, 75, 43, 0.6); margin-top: 20px; }
 
         .video-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
-        video { width: 100%; height: 100%; object-fit: cover; }
+        video { width: 100%; height: 100%; object-fit: cover; background: black; }
 
-        .content-overlay { position: relative; height: 100vh; width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: #fff; z-index: 10; }
-        .glass-box { background: rgba(0, 0, 0, 0.6); padding: 30px; border-radius: 25px; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); max-width: 85%; display: none; animation: fadeIn 2s ease-in; }
+        .content-overlay { position: relative; height: 100vh; width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: #fff; z-index: 10; pointer-events: none; }
+        .glass-box { background: rgba(0, 0, 0, 0.65); padding: 30px; border-radius: 25px; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); max-width: 85%; display: none; transition: opacity 1s; }
         .anniversary-title { font-family: 'Dancing Script', cursive; font-size: 3.2rem; color: #ff9a9e; margin-bottom: 10px; }
         h1 { font-size: 1.6rem; margin: 0; color: #fff; }
         .message-text { font-size: 1.1rem; line-height: 1.6; color: #fff; text-shadow: 2px 2px 10px rgba(0,0,0,0.8); }
 
         #mini-timer { position: fixed; bottom: 20px; right: 20px; background: rgba(0, 0, 0, 0.7); padding: 10px 15px; border-radius: 12px; border: 1px solid rgba(255, 154, 158, 0.4); color: #ff9a9e; font-size: 0.85rem; z-index: 20; display: none; }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .heart { position: absolute; bottom: -100px; font-size: 25px; animation: move 4s linear infinite; z-index: 5; opacity: 0.8; }
         @keyframes move { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; } }
     </style>
@@ -30,7 +29,8 @@
 <body>
 
     <div id="overlay" onclick="startSurprise()">
-        <button class="start-btn">Open Surprise ❤️</button>
+        <p>Are you ready for the surprise?</p>
+        <button class="start-btn">OPEN SURPRISE ❤️</button>
     </div>
 
     <div id="mini-timer">
@@ -38,8 +38,10 @@
     </div>
 
     <div class="video-container">
-        <video id="bgVideo" playsinline>
-            <source id="videoSource" src="video1.mp4" type="video/mp4">
+        <!-- මෙතන autoplay සහ loop දාලා තියෙනවා පහසුවට -->
+        <video id="bgVideo" playsinline preload="auto">
+            <source src="video1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
         </video>
     </div>
 
@@ -61,27 +63,44 @@
 
     <script>
         const video = document.getElementById('bgVideo');
-        const source = document.getElementById('videoSource');
         const targetDate = new Date("August 1, 2026 00:00:00").getTime();
 
         function startSurprise() {
+            // Overlay එක අයින් කරනවා
             document.getElementById('overlay').style.display = 'none';
             document.getElementById('mini-timer').style.display = 'block';
             
-            video.play();
+            // වීඩියෝ එක බලෙන් Play කරනවා
+            video.muted = false; // සද්දේ ඇහෙන්න ඕන නිසා
+            const playPromise = video.play();
 
-            // තත්පර 12න් නම් පේනවා
+            if (playPromise !== undefined) {
+                playPromise.then(_ => {
+                    console.log("Video started playing");
+                }).catch(error => {
+                    console.log("Playback failed: " + error);
+                    // වැරදීමක් වුණොත් සද්දේ නැතුව හරි ප්ලේ කරනවා
+                    video.muted = true;
+                    video.play();
+                });
+            }
+
+            // Timeline එක පටන් ගන්නවා
             setTimeout(() => {
                 document.getElementById('step1').style.display = 'block';
+                document.getElementById('step1').style.opacity = '1';
             }, 12000);
 
-            // තත්පර 24න් වීඩියෝව මාරු වී මැසේජ් එක පේනවා
             setTimeout(() => {
                 document.getElementById('step1').style.display = 'none';
-                source.src = "video2.mp4";
+                
+                // දෙවැනි වීඩියෝවට මාරු කිරීම
+                video.src = "video2.mp4";
                 video.load();
                 video.play();
+                
                 document.getElementById('step2').style.display = 'block';
+                document.getElementById('step2').style.opacity = '1';
             }, 24000);
 
             setInterval(updateCountdown, 1000);
@@ -97,6 +116,7 @@
             document.getElementById('seconds').innerText = Math.floor((gap % minute) / second);
         }
 
+        // හාර්ට් ඇනිමේෂන් එක
         function createHeart() {
             const heart = document.createElement('div');
             heart.classList.add('heart');
