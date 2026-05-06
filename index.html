@@ -6,133 +6,142 @@
     <title>M.U.R & B.M | Surprise</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <style>
-        body, html { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; font-family: 'Poppins', sans-serif; background: #000; }
-        
-        /* මුලින්ම පේන Screen එක */
-        #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 100; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; color: white; transition: 0.8s; }
-        .start-btn { padding: 15px 40px; font-size: 1.3rem; color: #fff; background: linear-gradient(45deg, #ff4b2b, #ff9a9e); border: none; border-radius: 50px; cursor: pointer; box-shadow: 0 0 30px rgba(255, 75, 43, 0.6); margin-top: 20px; text-transform: uppercase; letter-spacing: 2px; }
+        body, html { 
+            margin: 0; padding: 0; width: 100%; height: 100%; 
+            overflow: hidden; background-color: #000;
+            display: flex; justify-content: center; align-items: center;
+            font-family: 'Poppins', sans-serif;
+        }
 
-        /* වීඩියෝ ප්ලේයර් එක */
-        .video-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: black; }
-        video { width: 100%; height: 100%; object-fit: cover; transition: opacity 1s ease-in-out; }
+        /* ආරම්භක තිරය */
+        #click-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; z-index: 100;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            cursor: pointer; color: white;
+        }
+        .start-btn {
+            padding: 15px 40px; font-size: 1.3rem; color: #fff;
+            background: linear-gradient(45deg, #ff4b2b, #ff9a9e);
+            border: none; border-radius: 50px; cursor: pointer;
+            box-shadow: 0 0 30px rgba(255, 75, 43, 0.6);
+            text-transform: uppercase; letter-spacing: 2px;
+        }
 
-        /* වීදුරු පන්නයේ මැසේජ් පෙට්ටිය */
-        .content-overlay { position: relative; height: 100vh; width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: #fff; z-index: 10; pointer-events: none; }
-        .glass-box { background: rgba(0, 0, 0, 0.6); padding: 35px; border-radius: 30px; backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.2); max-width: 85%; display: none; opacity: 0; transition: opacity 1.5s; }
-        .anniversary-title { font-family: 'Dancing Script', cursive; font-size: 3.5rem; color: #ff9a9e; margin-bottom: 10px; text-shadow: 0 0 15px rgba(255, 154, 158, 0.6); }
-        h1 { font-size: 1.8rem; margin: 0; color: #fff; letter-spacing: 1px; }
-        .message-text { font-size: 1.2rem; line-height: 1.8; color: #fff; text-shadow: 2px 2px 10px rgba(0,0,0,0.9); }
+        /* වීඩියෝ එක */
+        #bg-video {
+            position: fixed; right: 0; bottom: 0;
+            min-width: 100%; min-height: 100%;
+            z-index: 1; object-fit: cover;
+            display: none; /* පටන් ගනිද්දී පේන්නේ නැහැ */
+        }
 
-        /* Countdown ටයිමර් එක */
-        #mini-timer { position: fixed; bottom: 25px; right: 25px; background: rgba(0, 0, 0, 0.7); padding: 10px 20px; border-radius: 15px; border: 1px solid rgba(255, 154, 158, 0.4); color: #ff9a9e; font-size: 0.9rem; z-index: 20; display: none; backdrop-filter: blur(5px); }
+        /* වීඩියෝ එක ඉවර වුණාම පේන පණිවිඩය */
+        .content {
+            text-align: center; z-index: 2;
+            display: none; opacity: 0;
+            transition: opacity 1.5s ease-in;
+            width: 85%;
+        }
+        .glass-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px; border-radius: 30px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+        }
+        .anniversary-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem; color: #ff9a9e; margin-bottom: 10px;
+        }
+        .message-text {
+            font-size: 1.1rem; line-height: 1.8; color: #fff;
+            margin: 20px 0;
+        }
+        .next-btn {
+            padding: 12px 35px; font-size: 1.1rem;
+            background: #ff4b2b; color: white;
+            border: none; border-radius: 25px;
+            cursor: pointer; transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(255, 75, 43, 0.4);
+        }
 
-        /* පාවෙන හාර්ට්ස් */
-        .heart { position: absolute; bottom: -100px; font-size: 25px; animation: move 4.5s linear infinite; z-index: 5; opacity: 0.8; }
-        @keyframes move { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; } }
+        /* හාර්ට් ඇනිමේෂන් */
+        .heart {
+            position: absolute; bottom: -100px; font-size: 25px;
+            animation: move 4.5s linear infinite; z-index: 5; opacity: 0.8;
+        }
+        @keyframes move {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- ආරම්භක තිරය -->
-    <div id="overlay" onclick="startSurprise()">
-        <p style="font-size: 1.1rem; opacity: 0.8;">Something special is waiting for you...</p>
+    <!-- පළමු පියවර: User ට Click කරන්න දෙනවා -->
+    <div id="click-overlay" onclick="startExperience()">
+        <p style="margin-bottom: 20px; opacity: 0.8;">Something special is waiting...</p>
         <button class="start-btn">OPEN SURPRISE ❤️</button>
     </div>
 
-    <!-- Countdown ටයිමරය -->
-    <div id="mini-timer">
-        ⏳ <span id="days">0</span>D : <span id="hours">0</span>H : <span id="minutes">0</span>M : <span id="seconds">0</span>S
-    </div>
+    <!-- දෙවන පියවර: වීඩියෝ එක -->
+    <video playsinline id="bg-video">
+        <source src="video1.mp4" type="video/mp4">
+    </video>
 
-    <!-- වීඩියෝ පසුබිම -->
-    <div class="video-container">
-        <video id="bgVideo" playsinline preload="auto">
-            <source src="video1.mp4" type="video/mp4">
-        </video>
-    </div>
-
-    <div class="content-overlay">
-        <!-- පියවර 1: නම් පෙන්වීම -->
-        <div id="step1" class="glass-box">
+    <!-- තෙවන පියවර: වීඩියෝ එක ඉවර වුණාම පේන content එක -->
+    <div class="content" id="mainContent">
+        <div class="glass-box">
             <div class="anniversary-title">Happy Anniversary!</div>
-            <h1>M.U.R. DEEGHAYU ❤️ B.M. DULAKSHI</h1>
-        </div>
-
-        <!-- පියවර 2: ආදරණීය පණිවිඩය -->
-        <div id="step2" class="glass-box">
+            <h2 style="color: white; margin: 0;">M.U.R. ❤️ B.M.</h2>
             <p class="message-text">
                 අකීකරැ හිත කැලි කෑලි වලට කැඩිලා ගිහිල්ල තිබ්බත්💔, <br>
                 ආදරේ කියන ගම් එකෙන් ඔයා ඒක ඇලෙව්වා ❤💕. <br>
                 කිසිම පනක් තිබ්බෙ නැති මගේ හිතට ඔයා පන දුන්නා 💟💝... <br><br>
-                <b>ඉතින් මම හැමදාටමත් ඔයාට ආදරෙයි ❤. <br>I Love You Menikh ..</b>
+                <b>ඉතින් මම හැමදාටමත් ඔයාට ආදරෙයි ❤.</b>
             </p>
+            <button class="next-btn" onclick="showNextVideo()">Next Video ❤️</button>
         </div>
     </div>
 
     <script>
-        const video = document.getElementById('bgVideo');
-        const targetDate = new Date("August 1, 2026 00:00:00").getTime();
+        const video = document.getElementById('bg-video');
+        const content = document.getElementById('mainContent');
+        const overlay = document.getElementById('click-overlay');
 
-        function startSurprise() {
-            // Overlay එක Hide කරනවා
-            const overlay = document.getElementById('overlay');
-            overlay.style.opacity = '0';
-            setTimeout(() => overlay.style.display = 'none', 800);
+        // 1. User Click කළාම වීඩියෝ එක පටන් ගන්නවා
+        function startExperience() {
+            overlay.style.display = "none";
+            video.style.display = "block";
+            video.play();
             
-            // ටයිමරය පෙන්වනවා
-            document.getElementById('mini-timer').style.display = 'block';
-            
-            // වීඩියෝ එක සද්දයත් එක්ක Play කරනවා
-            video.muted = false;
-            video.play().catch(e => {
-                console.log("Auto-play failed, playing muted.");
-                video.muted = true;
-                video.play();
-            });
-
-            // තත්පර 12න් පියවර 1
-            setTimeout(() => {
-                const s1 = document.getElementById('step1');
-                s1.style.display = 'block';
-                setTimeout(() => s1.style.opacity = '1', 50);
-            }, 12000);
-
-            // තත්පර 24න් වීඩියෝව මාරු කර පියවර 2 පෙන්වීම
-            setTimeout(() => {
-                const s1 = document.getElementById('step1');
-                const s2 = document.getElementById('step2');
-                
-                s1.style.opacity = '0';
-                setTimeout(() => {
-                    s1.style.display = 'none';
-                    
-                    // දෙවැනි වීඩියෝවට මාරු කිරීම (Smoothly)
-                    video.style.opacity = '0';
-                    setTimeout(() => {
-                        video.src = "video2.mp4";
-                        video.load();
-                        video.play();
-                        video.style.opacity = '1';
-                    }, 500);
-                    
-                    s2.style.display = 'block';
-                    setTimeout(() => s2.style.opacity = '1', 50);
-                }, 1000);
-            }, 24000);
-
-            setInterval(updateCountdown, 1000);
+            // හාර්ට් ඇනිමේෂන් එක පටන් ගන්නවා
+            setInterval(createHeart, 400);
         }
 
-        // Countdown Logic
-        function updateCountdown() {
-            const now = new Date().getTime();
-            const gap = targetDate - now;
-            const second = 1000, minute = second * 60, hour = minute * 60, day = hour * 24;
-            
-            document.getElementById('days').innerText = Math.floor(gap / day);
-            document.getElementById('hours').innerText = Math.floor((gap % day) / hour);
-            document.getElementById('minutes').innerText = Math.floor((gap % hour) / minute);
-            document.getElementById('seconds').innerText = Math.floor((gap % minute) / second);
+        // 2. වීඩියෝ එක (video1.mp4) ප්ලේ වෙලා ඉවර වුණාම
+        video.onended = function() {
+            video.style.opacity = "0"; // වීඩියෝ එක හෙමින් අයින් කරනවා
+            setTimeout(() => {
+                video.style.display = "none";
+                content.style.display = "block"; // මැසේජ් එක පෙන්වනවා
+                setTimeout(() => content.style.opacity = "1", 50);
+                document.body.style.background = "linear-gradient(to bottom, #000000, #2c0000)"; 
+            }, 500);
+        };
+
+        // 3. Next Video බටන් එක එබුවම video2.mp4 ප්ලේ වෙනවා
+        function showNextVideo() {
+            content.style.opacity = "0";
+            setTimeout(() => {
+                content.style.display = "none";
+                video.src = "video2.mp4"; // දෙවැනි වීඩියෝවට මාරු කරනවා
+                video.style.display = "block";
+                video.style.opacity = "1";
+                video.loop = true; // දෙවැනි වීඩියෝව දිගටම ප්ලේ වෙන්න ඕන නිසා
+                video.play();
+            }, 800);
         }
 
         // හාර්ට්ස් හැදීම
@@ -146,7 +155,6 @@
             document.body.appendChild(heart);
             setTimeout(() => heart.remove(), 4500);
         }
-        setInterval(createHeart, 350);
     </script>
 </body>
 </html>
