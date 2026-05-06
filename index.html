@@ -3,161 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deeghayu ❤️ Dulakshi</title>
+    <title>M.U.R & B.M</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
     <style>
         body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow: hidden;
-            font-family: 'Poppins', sans-serif;
-            background: #000;
+            margin: 0; padding: 0; height: 100%; width: 100%;
+            overflow: hidden; font-family: 'Poppins', sans-serif; background: #000;
         }
 
-        /* Background Video */
-        .video-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
+        .video-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; pointer-events: none;
         }
 
-        .video-background iframe {
-            width: 100vw;
-            height: 56.25vw;
-            min-height: 100vh;
-            min-width: 177.77vh;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+        iframe {
+            width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            border: none;
         }
 
-        .container {
-            z-index: 10;
-            position: relative;
-            background: rgba(0, 0, 0, 0.4); 
-            padding: 40px;
-            border-radius: 30px;
-            box-shadow: 0 0 20px rgba(255, 105, 180, 0.3);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            text-align: center;
-            color: #fff;
-            max-width: 700px;
-            margin: 15vh auto;
+        .content-overlay {
+            position: relative; height: 100vh; width: 100%;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; color: #fff; z-index: 10;
         }
 
-        /* Names Styling */
+        .glass-box {
+            background: rgba(0, 0, 0, 0.6); padding: 30px; border-radius: 20px;
+            backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 80%;
+        }
+
         h1 {
-            font-size: 2.2rem;
-            margin-bottom: 5px;
-            background: linear-gradient(to right, #ff9a9e, #fad0c4, #ffb1ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0px 0px 10px rgba(255, 154, 158, 0.5);
-            font-weight: bold;
+            font-size: 2rem; margin: 0;
+            background: linear-gradient(to right, #ff9a9e, #fad0c4);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
 
-        p.sub-text {
-            font-size: 1.1rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-            color: #fecfef;
+        .timer { font-size: 4rem; font-weight: bold; color: #ff4b2b; }
+
+        .message-text {
+            font-size: 1.3rem; line-height: 1.6; color: #fff;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+            animation: fadeIn 2s ease-in;
         }
 
-        #countdown {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .time-box {
-            background: rgba(255, 255, 255, 0.15);
-            padding: 15px;
-            border-radius: 15px;
-            min-width: 65px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .time-box span {
-            display: block;
-            font-size: 2rem;
-            font-weight: bold;
-            color: #fff;
-        }
-
-        /* Floating Hearts */
         .heart {
-            position: absolute;
-            bottom: -100px;
-            font-size: 20px;
-            color: #ff4b2b;
-            animation: move 5s linear infinite;
-            z-index: 5;
+            position: absolute; bottom: -100px; font-size: 25px;
+            animation: move 4s linear infinite; z-index: 5; opacity: 0.8;
         }
 
         @keyframes move {
             0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
         }
     </style>
 </head>
 <body>
 
-    <div class="video-background">
-        <iframe src="https://www.youtube.com/embed/u2IEDVXPcc8?autoplay=1&mute=1&controls=0&loop=1&playlist=u2IEDVXPcc8&rel=0&showinfo=0" 
-                frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    <div class="video-container">
+        <iframe id="mainVideo" src="https://www.youtube.com/embed/u2IEDVXPcc8?autoplay=1&mute=1&controls=0&loop=1&playlist=u2IEDVXPcc8"></iframe>
     </div>
 
-    <div class="container">
-        <!-- ඔයාලගේ නම් මෙතන තියෙන්නේ -->
-        <h1>M.U.R. DEEGHAYU ❤️ B.M. DULAKSHI</h1>
-        <p class="sub-text">Our Love Story Continues</p>
+    <div id="ui" class="content-overlay">
+        <!-- Step 1 & 2: Names & Countdown -->
+        <div id="step1" class="glass-box">
+            <h1>M.U.R. DEEGHAYU ❤️ B.M. DULAKSHI</h1>
+            <div id="countdown" class="timer">20</div>
+            <p>Seconds for a surprise...</p>
+        </div>
 
-        <div id="countdown">
-            <div class="time-box"><span id="days">00</span>Days</div>
-            <div class="time-box"><span id="hours">00</span>Hrs</div>
-            <div class="time-box"><span id="minutes">00</span>Min</div>
-            <div class="time-box"><span id="seconds">00</span>Sec</div>
+        <!-- Step 3: Final Message -->
+        <div id="step2" class="glass-box" style="display: none;">
+            <p class="message-text">
+                අකීකරැ හිත කැලි කෑලි වලට කැඩිලා ගිහිල්ල තිබ්බත්💔, ආදරේ කියන ගම් එකෙන් ඔයා ඒක ඇලෙව්වා ❤💕. <br>
+                කිසිම පනක් තිබ්බෙ නැති මගේ හිතට ඔයා පන දුන්නා 💟💝... <br><br>
+                <b>ඉතින් මම හැමදාටමත් ඔයාට ආදරෙයි ❤. I Love You Menikh ..</b>
+            </p>
         </div>
     </div>
 
     <script>
-        // Anniversary Date: August 1st
-        const anniversaryDate = new Date("August 1, 2026 00:00:00").getTime();
+        let timeLeft = 20;
+        const timerDisplay = document.getElementById('countdown');
+        const step1 = document.getElementById('step1');
+        const step2 = document.getElementById('step2');
+        const mainVideo = document.getElementById('mainVideo');
 
-        function updateCountdown() {
-            const now = new Date().getTime();
-            const distance = anniversaryDate - now;
+        const interval = setInterval(() => {
+            timeLeft--;
+            timerDisplay.innerText = timeLeft;
 
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            if (timeLeft <= 0) {
+                clearInterval(interval);
+                startFinalStep();
+            }
+        }, 1000);
 
-            document.getElementById("days").innerText = days;
-            document.getElementById("hours").innerText = hours;
-            document.getElementById("minutes").innerText = minutes;
-            document.getElementById("seconds").innerText = seconds;
+        function startFinalStep() {
+            step1.style.display = 'none';
+            // දෙවැනි වීඩියෝ එක (Shorts) Load කරනවා
+            mainVideo.src = "https://www.youtube.com/embed/gJ28BCZTVFQ?autoplay=1&mute=1&controls=0&loop=1&playlist=gJ28BCZTVFQ";
+            
+            // තත්පර 2කින් Message එක පේන්න සලස්වනවා
+            setTimeout(() => {
+                step2.style.display = 'block';
+            }, 2000);
         }
 
-        setInterval(updateCountdown, 1000);
-
+        // Floating Hearts Animation
         function createHeart() {
             const heart = document.createElement('div');
             heart.classList.add('heart');
-            heart.innerHTML = '💖';
+            const icons = ['❤️', '💖', '💝', '💕'];
+            heart.innerHTML = icons[Math.floor(Math.random() * icons.length)];
             heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+            heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
             document.body.appendChild(heart);
-            setTimeout(() => { heart.remove(); }, 5000);
+            setTimeout(() => heart.remove(), 4000);
         }
-        setInterval(createHeart, 400);
+        setInterval(createHeart, 300);
     </script>
 </body>
 </html>
