@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I Love You</title>
+    <style>
+        body, html {
+            margin: 0; padding: 0;
+            width: 100%; height: 100%;
+            overflow: hidden; 
+            background-color: #000; /* වීඩියෝ එක යනකන් කළු පාටට තියෙන්නේ */
+            display: flex; justify-content: center; align-items: center;
+            font-family: 'Brush Script MT', cursive; /* ආදරේ ප්‍රකාශ කරන්න ලස්සන ෆොන්ට් එකක් */
+        }
+
+        #bg-video-2 {
+            position: fixed; right: 0; bottom: 0;
+            min-width: 100%; min-height: 100%;
+            z-index: 1;
+            object-fit: cover;
+        }
+
+        .message-container {
+            text-align: center;
+            z-index: 2;
+            display: none; /* වීඩියෝ එක ඉවර වෙනකන් පේන්නේ නැහැ */
+        }
+
+        h1 {
+            color: #ff3366; 
+            font-size: 6rem;
+            text-shadow: 0 0 20px rgba(255, 51, 102, 0.6);
+            animation: zoomIn 1.5s ease-out forwards;
+        }
+
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.5); }
+            to { opacity: 1; transform: scale(1.1); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- දෙවැනි වීඩියෝ එක (Valentine Day Love Story Video AE Template...) -->
+    <video autoplay muted playsinline id="bg-video-2">
+        <source src="video2.mp4" type="video/mp4">
+    </video>
+
+    <div class="message-container" id="loveContent">
+        <h1 id="love-text">I LOVE YOU ❤️</h1>
+    </div>
+
+    <script>
+        const video2 = document.getElementById('bg-video-2');
+        const loveContent = document.getElementById('loveContent');
+
+        // වීඩියෝ එක ප්ලේ වෙලා ඉවර වුණ ගමන් මේක වැඩ කරනවා
+        video2.onended = function() {
+            video2.style.display = "none"; // වීඩියෝ එක අයින් කරනවා
+            loveContent.style.display = "block"; // "I LOVE YOU" පෙන්වනවා
+            document.body.style.backgroundColor = "#ffe5ec"; // ලස්සන ලා රෝස පාටක් දානවා
+        };
+
+        // සමහර වෙලාවට auto-play block වුණොත් වීඩියෝ එක ක්ලික් කරලා ප්ලේ කරන්නත් පුළුවන්
+        document.body.onclick = function() {
+            video2.play();
+        }
+    </script>
+</body>
+</html>
