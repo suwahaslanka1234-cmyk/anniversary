@@ -3,90 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deeghayu ❤️ Dulakshi</title>
+    <title>M.U.R & B.M | Surprise</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <style>
-        body, html {
-            margin: 0; padding: 0; height: 100%; width: 100%;
-            overflow: hidden; font-family: 'Poppins', sans-serif; background: #000;
-        }
-
-        #overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; z-index: 100; display: flex;
-            justify-content: center; align-items: center; cursor: pointer;
-        }
-
-        .start-btn {
-            padding: 15px 35px; font-size: 1.2rem; color: #fff;
-            background: linear-gradient(45deg, #ff4b2b, #ff9a9e);
-            border: none; border-radius: 50px; cursor: pointer;
-            box-shadow: 0 0 25px rgba(255, 75, 43, 0.6);
-            animation: pulse 1.5s infinite;
-        }
-
+        body, html { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; font-family: 'Poppins', sans-serif; background: #000; }
+        
+        #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 100; display: flex; justify-content: center; align-items: center; cursor: pointer; }
+        .start-btn { padding: 15px 35px; font-size: 1.2rem; color: #fff; background: linear-gradient(45deg, #ff4b2b, #ff9a9e); border: none; border-radius: 50px; cursor: pointer; box-shadow: 0 0 25px rgba(255, 75, 43, 0.6); animation: pulse 1.5s infinite; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
-        .video-container {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; pointer-events: none;
-        }
+        .video-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+        #player { width: 100vw; height: 100vh; pointer-events: none; }
 
-        iframe {
-            width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh;
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            border: none;
-        }
+        .content-overlay { position: relative; height: 100vh; width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: #fff; z-index: 10; }
+        .glass-box { background: rgba(0, 0, 0, 0.6); padding: 30px; border-radius: 25px; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); max-width: 85%; display: none; animation: fadeIn 2s ease-in; }
+        .anniversary-title { font-family: 'Dancing Script', cursive; font-size: 3.2rem; color: #ff9a9e; margin-bottom: 10px; }
+        h1 { font-size: 1.6rem; margin: 0; color: #fff; }
+        .message-text { font-size: 1.1rem; line-height: 1.6; color: #fff; text-shadow: 2px 2px 10px rgba(0,0,0,0.8); }
 
-        .content-overlay {
-            position: relative; height: 100vh; width: 100%;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            text-align: center; color: #fff; z-index: 10;
-        }
-
-        .glass-box {
-            background: rgba(0, 0, 0, 0.55); padding: 35px; border-radius: 25px;
-            backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1);
-            max-width: 85%; display: none;
-            animation: fadeIn 2s ease-in;
-        }
-
-        .anniversary-title { font-family: 'Dancing Script', cursive; font-size: 3.5rem; color: #ff9a9e; margin-bottom: 10px; }
-        h1 { font-size: 1.8rem; margin: 0; color: #fff; }
-        .message-text { font-size: 1.2rem; line-height: 1.7; color: #fff; text-shadow: 2px 2px 10px rgba(0,0,0,0.8); }
-
-        /* Mini Countdown Styling */
-        #mini-timer {
-            position: fixed; bottom: 20px; right: 20px;
-            background: rgba(0, 0, 0, 0.6); padding: 10px 15px;
-            border-radius: 15px; border: 1px solid rgba(255, 154, 158, 0.4);
-            color: #ff9a9e; font-size: 0.9rem; z-index: 20;
-            backdrop-filter: blur(5px); display: none;
-        }
+        #mini-timer { position: fixed; bottom: 20px; right: 20px; background: rgba(0, 0, 0, 0.7); padding: 10px 15px; border-radius: 12px; border: 1px solid rgba(255, 154, 158, 0.4); color: #ff9a9e; font-size: 0.85rem; z-index: 20; display: none; }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        .heart {
-            position: absolute; bottom: -100px; font-size: 25px;
-            animation: move 4s linear infinite; z-index: 5; opacity: 0.8;
-        }
-
+        .heart { position: absolute; bottom: -100px; font-size: 25px; animation: move 4s linear infinite; z-index: 5; opacity: 0.8; }
         @keyframes move { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; } }
     </style>
 </head>
 <body>
 
-    <div id="overlay" onclick="startSurprise()">
-        <button class="start-btn">Click to See Surprise ❤️</button>
+    <div id="overlay">
+        <button class="start-btn" onclick="startSurprise()">Open Surprise ❤️</button>
     </div>
 
-    <!-- Mini Anniversary Countdown -->
     <div id="mini-timer">
         ⏳ <span id="days">0</span>D : <span id="hours">0</span>H : <span id="minutes">0</span>M : <span id="seconds">0</span>S
     </div>
 
     <div class="video-container">
-        <iframe id="mainVideo" src=""></iframe>
+        <div id="player"></div>
     </div>
 
     <div class="content-overlay">
@@ -105,45 +58,64 @@
         </div>
     </div>
 
-    <script>
-        const mainVideo = document.getElementById('mainVideo');
-        const overlay = document.getElementById('overlay');
-        const step1 = document.getElementById('step1');
-        const step2 = document.getElementById('step2');
-        const miniTimer = document.getElementById('mini-timer');
+    <!-- YouTube API එක Load කරනවා -->
+    <script src="https://www.youtube.com/iframe_api"></script>
 
-        // Anniversary Date (August 1st)
+    <script>
+        let player;
         const targetDate = new Date("August 1, 2026 00:00:00").getTime();
 
-        function startSurprise() {
-            overlay.style.display = 'none';
-            miniTimer.style.display = 'block';
-            
-            // 1. First Video Start
-            mainVideo.src = "https://www.youtube.com/embed/u2IEDVXPcc8?autoplay=1&controls=0&mute=0&playlist=u2IEDVXPcc8&loop=1";
+        // YouTube Player එක Initialize කිරීම
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '100%',
+                width: '100%',
+                videoId: 'u2IEDVXPcc8', // පළමු වීඩියෝව
+                playerVars: {
+                    'autoplay': 0,
+                    'controls': 0,
+                    'showinfo': 0,
+                    'rel': 0,
+                    'modestbranding': 1,
+                    'loop': 1,
+                    'playlist': 'u2IEDVXPcc8'
+                },
+                events: {
+                    'onReady': onPlayerReady
+                }
+            });
+        }
 
-            // 2. After 12s: Names & Anniversary Title
+        function onPlayerReady(event) {
+            // Player එක ලෑස්තියි, හැබැයි Button එක එබුවම තමයි Play වෙන්නේ
+        }
+
+        function startSurprise() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('mini-timer').style.display = 'block';
+            
+            player.playVideo(); // වීඩියෝ එක බලෙන් පටන් ගන්නවා
+            player.unMute();
+
+            // තත්පර 12න් පියවර 1
             setTimeout(() => {
-                step1.style.display = 'block';
+                document.getElementById('step1').style.display = 'block';
             }, 12000);
 
-            // 3. After 24s total: Second Video & Love Message
+            // තත්පර 24න් පියවර 2 සහ දෙවැනි වීඩියෝව
             setTimeout(() => {
-                step1.style.display = 'none';
-                mainVideo.src = "https://www.youtube.com/embed/gJ28BCZTVFQ?autoplay=1&controls=0&mute=0&playlist=gJ28BCZTVFQ&loop=1";
-                step2.style.display = 'block';
+                document.getElementById('step1').style.display = 'none';
+                player.loadVideoById('gJ28BCZTVFQ'); // දෙවැනි වීඩියෝවට මාරු වෙනවා
+                document.getElementById('step2').style.display = 'block';
             }, 24000);
 
-            // Start Countdown Logic
             setInterval(updateCountdown, 1000);
         }
 
         function updateCountdown() {
             const now = new Date().getTime();
             const gap = targetDate - now;
-
-            const second = 1000; const minute = second * 60; const hour = minute * 60; const day = hour * 24;
-
+            const second = 1000, minute = second * 60, hour = minute * 60, day = hour * 24;
             document.getElementById('days').innerText = Math.floor(gap / day);
             document.getElementById('hours').innerText = Math.floor((gap % day) / hour);
             document.getElementById('minutes').innerText = Math.floor((gap % hour) / minute);
